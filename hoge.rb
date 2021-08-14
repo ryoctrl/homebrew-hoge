@@ -6,7 +6,10 @@ class Hoge < Formula
   license ""
 
   def install
-    system "./configure", *std_configure_args, "--disable-silent-rules"
+    inreplace "bin/hoge", /^CLIENT_HOME=/, "export HOGE_OCLIF_CLIENT_HOME=#{lib/"client"}\nCLIENT_HOME="
+
+    libexec.install Dir["*"]
+    bin.install_symlink libexec/"bin/hoge"
   end
 
   test do
